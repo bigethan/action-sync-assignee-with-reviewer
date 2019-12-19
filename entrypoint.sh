@@ -25,13 +25,13 @@ reviewer=$(jq --raw-output .pull_request.requested_reviewer "$GITHUB_EVENT_PATH"
 
 update_review_request() {
 
-  echo 'curl -sSL \
-    -H "Content-Type: application/json" \
-    -H "${AUTH_HEADER}" \
-    -H "${API_HEADER}" \
-    -X $1 \
-    -d "{\"assignees\":[\"${reviewer}\"]}" \
-    "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/assignees"'
+  echo "curl -sSL \\"
+  echo "  -H \"Content-Type: application/json\" \\"
+  echo "  -H \"${AUTH_HEADER}\" \\"
+  echo "  -H \"${API_HEADER}\" \\"
+  echo "  -X $1 \\"
+  echo "  -d \"{\"assignees\":[\"${reviewer}\"]}\" \\"
+  echo "  \"https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/assignees\""
 
   curl -sSL \
     -H "Content-Type: application/json" \
