@@ -24,12 +24,21 @@ number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 reviewer=$(jq --raw-output .pull_request.requested_reviewer "$GITHUB_EVENT_PATH")
 
 update_review_request() {
+
+  echo 'curl -sSL \
+    -H "Content-Type: application/json" \
+    -H "${AUTH_HEADER}" \
+    -H "${API_HEADER}" \
+    -X $1 \
+    -d "{\"assignees\":[\"${reviewer}\"]}" \
+    "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/assignees"'
+
   curl -sSL \
     -H "Content-Type: application/json" \
     -H "${AUTH_HEADER}" \
     -H "${API_HEADER}" \
     -X $1 \
-    -d "{\"assignee\":[\"${reviewer}\"]}" \
+    -d "{\"assignees\":[\"${reviewer}\"]}" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/assignees"
 }
 
